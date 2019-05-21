@@ -68,7 +68,7 @@ def game_loop():
 
   while True:
       draw_map(player)
-      get_moves(player)
+      valid_moves = get_moves(player)
 
       print("You are currently in room {}".format(player)) # fill with player position
       print("You can move {}".format(", ".join(valid_moves))) # fill with moves
@@ -85,12 +85,11 @@ def game_loop():
         input("nope, wall")
       clear_screen()
 
-while True:
-  valid_moves = get_moves(player)
-  clear_screen()
-  print("Press return to start")
-  clear_screen()
-  game_loop()
+
+clear_screen()
+print("Press return to start")
+clear_screen()
+game_loop()
     
 
   
