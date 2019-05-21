@@ -2,7 +2,6 @@ import random
 import os
 
 
-
 CELLS = [ (0,0), (1,0), (2,0), (3,0), (4,0),
           (0,1), (1,1), (2,1), (3,1), (4,1),
           (0,2), (1,2), (2,2), (3,2), (4,2),
@@ -41,8 +40,6 @@ def get_moves(player):
     moves.remove("DOWN")
   return moves
 
-monster, door, player = get_locations()
-
 def draw_map(player):
   print(" _"*5)
   tile = "|{}"
@@ -65,8 +62,10 @@ def draw_map(player):
 
 def game_loop():
   monster, door, player = get_locations()
+  playing = True
 
-  while True:
+  while playing:
+      clear_screen()
       draw_map(player)
       valid_moves = get_moves(player)
 
@@ -78,17 +77,25 @@ def game_loop():
 
       
       if action == "QUIT":
+        print("See you next time!")
         break
       if action in valid_moves:
         player = move_player(player, action)
+
+        if player == monster:
+          print("Oh no, the monster got you!")
+          playing = False
+        if player == door:
+          print("Congrats you escaped!")
+          playing = False
       else:
-        input("nope, wall")
-      clear_screen()
-
+        input("Can't go this way, wall")
+  else:
+    if input("Play again? [Y/N] ").lower() != "n":
+      game_loop()
 
 clear_screen()
-print("Press return to start")
-clear_screen()
+print("Find the door before the monster gets you.")
 game_loop()
     
 
