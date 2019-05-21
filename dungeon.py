@@ -12,9 +12,11 @@ CELLS = [ (0,0), (1,0), (2,0), (3,0), (4,0),
 def clear_screen():
   os.system('cls' if os.name == 'nt' else 'clear')
 
+# get locations for player, monster, and door
 def get_locations():
   return random.sample(CELLS, 3)
 
+# move players coordinates
 def move_player(player, move):
   x, y = player
   if move == "LEFT":
@@ -27,6 +29,7 @@ def move_player(player, move):
     y += 1
   return x, y
 
+# get available moves per player, given the walls adjacent to them
 def get_moves(player):
   moves = ["LEFT", "RIGHT", "UP", "DOWN"]
   x, y = player
@@ -40,6 +43,7 @@ def get_moves(player):
     moves.remove("DOWN")
   return moves
 
+# draw grid of cells with players location
 def draw_map(player):
   print(" _"*5)
   tile = "|{}"
@@ -60,6 +64,7 @@ def draw_map(player):
         output = tile.format("_|")
     print(output, end=line_end)
 
+# call to start the game
 def game_loop():
   monster, door, player = get_locations()
   playing = True
@@ -69,16 +74,16 @@ def game_loop():
       draw_map(player)
       valid_moves = get_moves(player)
 
-      print("You are currently in room {}".format(player)) # fill with player position
-      print("You can move {}".format(", ".join(valid_moves))) # fill with moves
+      print("You are currently in room {}".format(player)) 
+      print("You can move {}".format(", ".join(valid_moves))) 
       print("Enter QUIT to quit")
       
       action = input("> ").upper()
-
       
       if action == "QUIT":
         print("See you next time!")
         break
+
       if action in valid_moves:
         player = move_player(player, action)
 
@@ -90,6 +95,7 @@ def game_loop():
           playing = False
       else:
         input("Can't go this way, wall")
+
   else:
     if input("Play again? [Y/N] ").lower() != "n":
       game_loop()
